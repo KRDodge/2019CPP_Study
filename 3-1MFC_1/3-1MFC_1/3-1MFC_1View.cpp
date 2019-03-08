@@ -26,11 +26,14 @@ BEGIN_MESSAGE_MAP(CMy31MFC1View, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_CREATE()
+	ON_WM_LBUTTONDBLCLK()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 // CMy31MFC1View 생성/소멸
 
-CMy31MFC1View::CMy31MFC1View() noexcept
+CMy31MFC1View::CMy31MFC1View() : m_bTimerRun(false),m_bTimerType(true)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 
@@ -102,3 +105,30 @@ CMy31MFC1Doc* CMy31MFC1View::GetDocument() const // 디버그되지 않은 버�
 
 
 // CMy31MFC1View 메시지 처리기
+
+
+int CMy31MFC1View::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	AfxMessageBox(_T("윈도우가 생성되었습니다."), MB_OKCANCEL | MB_ICONINFORMATION);
+
+	return 0;
+}
+
+
+void CMy31MFC1View::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	AfxMessageBox(_T("마우스 왼쪽 더블클릭"), MB_YESNO | MB_ICONQUESTION);
+
+	CView::OnLButtonDblClk(nFlags, point);
+}
+
+
+void CMy31MFC1View::OnDestroy()
+{
+	CView::OnDestroy();
+
+	AfxMessageBox(_T("윈도우가 종료되었습니다."), MB_YESNO | MB_ICONWARNING);
+}
